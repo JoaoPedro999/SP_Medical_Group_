@@ -1,133 +1,186 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>SP Medical Group</title>
-  <link href="estilos.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendamento de Consulta</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .cabecalho {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .logo {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+    }
+
+    .titulo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+
+    input[type="text"],
+    select,
+    input[type="date"],
+    input[type="time"] {
+      width: 90%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #consultas-container {
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    #consultas-container h3 {
+      text-align: center;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    ul li {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+  </style>
 </head>
-<script>
-  function agendamento(){
-// Seleciona o formulário
-const form = document.querySelector('form');
-
-// Seleciona o elemento para exibir as consultas agendadas
-const consultasContainer = document.querySelector('#consultas-container');
-
-// Cria uma matriz vazia para armazenar as consultas agendadas
-let consultas = [];
-
-// Adiciona um listener para o evento de envio do formulário
-form.addEventListener('submit', (event) => {
-  // Previne o comportamento padrão de envio do formulário
-  event.preventDefault();
-
-  // Cria um objeto com as informações da consulta agendada
-  const consulta = {
-    nome: form.querySelector('#name').value,
-    email: form.querySelector('#email').value,
-    telefone: form.querySelector('#phone').value,
-    medico: form.querySelector('#doctor').value,
-    data: form.querySelector('#date').value,
-    horario: form.querySelector('#time').value
-  };
-
-  // Adiciona o objeto à matriz de consultas agendadas
-  consultas.push(consulta);
-
-  // Limpa o formulário para o próximo agendamento
-  form.reset();
-  
-  // Exibe as consultas agendadas na tela
-  exibirConsultas();
-});
-
-// Função para exibir as consultas agendadas na tela
-function exibirConsultas() {
-  // Cria uma variável para armazenar o HTML das consultas agendadas
-  let consultasHTML = '';
-
-  // Percorre a matriz de consultas e adiciona as informações ao HTML
-  consultas.forEach((consulta) => {
-    consultasHTML += `
-      <div>
-        <h3>Consulta agendada:</h3> <br>
-        <p><strong>Nome:</strong> ${consulta.nome}</p>
-        <p><strong>E-mail:</strong> ${consulta.email}</p>
-        <p><strong>Telefone:</strong> ${consulta.telefone}</p>
-        <p><strong>Médico:</strong> ${consulta.medico}</p>
-        <p><strong>Data:</strong> ${consulta.data}</p>
-        <p><strong>Horário:</strong> ${consulta.horario}</p>
-      </div>
-    `;
-  });
-
-  // Adiciona o HTML das consultas agendadas ao elemento na tela
-  consultasContainer.innerHTML = consultasHTML;
-}
-  }
-</script>
 <body>
   <div class="cabecalho">
-
-
-     <div class="logo2"><img src="Logo.png" height="40" id="logo"></div>
-     <div class="logo2"><h1>SP MEDICAL GROUP</h1>
-    <!--<div class="profile">
-      <img src="profile.png" height="40">
-      </div> -->
-       </div> 
-    
-    <nav class="menu">
-      <ul>
-        <li><a href="#">=</a> 
-    	         	<ul>
-                  <li><a href="../index.html">Home</a></li>
-                  <li><a href="../registro/registro.html">Login</a></li>
-                  <li><a href="#">Consultas</a></li>
-                  <li><a href="#">Dowload</a></li>    
-    	                
-    	       		</ul>
-    		
-      </ul>
-    </nav>
+    <img class="logo" src="Logo.png" alt="Logo da Cruz Preta">
+    <span class="titulo">SP MEDICAL GROUP</span>
   </div>
-  <div class="minibar">
-    <img src="email.png" height="20px"><b>spmedical@email.com <img src="telefone.png" height="20px"left="20px">     <b>  (19)9580-0029
-  </div>
-  <!--espaçamento-->
-  <div class="espacamento1"></div>
-  <main>
-    <h2>Agendar Consulta</h2>
 
-    <form onsubmit="agendamento(); return false;">
+  <div class="container">
+    <h2>Agendar Consulta Médica</h2>
+    <form id="consulta-form">
       <label for="name">Nome:</label>
       <input type="text" id="name" name="name" required>
-
-      <label for="email">E-mail:</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="phone">Telefone:</label>
-      <input type="tel" id="phone" name="phone" required>
-
-      <label for="doctor">Médico:</label>
-      <select id="doctor" name="doctor" required>
-        <option value="">Selecione um médico</option>
-        <option value="1">Dr. João da Silva</option>
-        <option value="2">Dra. Maria dos Santos</option>
-        <option value="3">Dr. José Carlos</option>
-      </select>
 
       <label for="date">Data:</label>
       <input type="date" id="date" name="date" required>
 
-      <label for="time">Horário:</label>
+      <label for="time">Hora:</label>
       <input type="time" id="time" name="time" required>
+
+      <label for="doctor">Escolha o Médico:</label>
+      <select id="doctor" name="doctor" required>
+        <option value="">Selecione um médico</option>
+        <option value="Dr. João da Silva">Dr. João da Silva</option>
+        <option value="Dra. Maria dos Santos">Dra. Maria dos Santos</option>
+        <option value="Dr. José Carlos">Dr. José Carlos</option>
+      </select>
 
       <button type="submit">Agendar</button>
     </form>
-  </main> <br><br>
-  <div id="consultas-container"><h3>SUAS CONSULTAS APARECERÃO AQUI </h3></div>
-      
-    </body>
-    </html>
+  </div>
+
+  <div id="consultas-container">
+    <h3>Consultas Agendadas</h3>
+    <ul id="consultas-list">
+      <!-- As consultas agendadas serão exibidas aqui -->
+    </ul>
+  </div>
+
+  <script>
+    const consultas = [];
+    const consultaForm = document.getElementById('consulta-form');
+    const consultasList = document.getElementById('consultas-list');
+
+    consultaForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const doctor = document.getElementById('doctor').value;
+
+      const consulta = {
+        nome: name,
+        data: date,
+        horario: time,
+        medico: doctor,
+      };
+
+      consultas.push(consulta);
+      limparCampos();
+      exibirConsultas();
+    });
+
+    function limparCampos() {
+      document.getElementById('name').value = '';
+      document.getElementById('date').value = '';
+      document.getElementById('time').value = '';
+      document.getElementById('doctor').value = '';
+    }
+
+    function exibirConsultas() {
+      consultasList.innerHTML = '';
+      consultas.forEach((consulta, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <strong>Consulta ${index + 1}:</strong>
+          <p><strong>Nome:</strong> ${consulta.nome}</p>
+          <p><strong>Data:</strong> ${consulta.data}</p>
+          <p><strong>Hora:</strong> ${consulta.horario}</p>
+          <p><strong>Médico:</strong> ${consulta.medico}</p>
+        `;
+        consultasList.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
