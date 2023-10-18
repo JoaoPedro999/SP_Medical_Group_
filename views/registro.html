@@ -257,25 +257,31 @@ input[type="submit"]:hover{
     <div class="content">
       <!-- FORMULÁRIO DE CADASTRO -->
       <div id="cadastro">
-        <form method="post" action="/cadastro">
+        <form method="post" action="">
           <h2>Cadastro</h2>
 
           <p>
             <label for="nome_cad">Seu nome</label>
-            <input id="nome_cad" name="name" required="required" type="text" placeholder="nome" />
+            <input id="nome_cad" name="nome_cad" required="required" type="text" placeholder="nome" />
           </p>
 
           <p>
-            <label for="email_cad">Sua senha</label>
-            <input id="email_cad" name="password" required="required" type="password" placeholder="senha" />
+            <label for="email_cad">Seu e-mail</label>
+            <input id="email_cad" name="email_cad" required="required" type="email" placeholder="example@example.com" />
           </p>
+
+          <p>
+            <label for="senha_cad">Seu cpf</label>
+            <input id="senha_cad" name="senha_cad" required="required" type="text" placeholder="ex. cpf" />
+          </p>
+
           <p>
             <input type="submit" value="Cadastrar" />
           </p>
 
           <p class="link">
             Já tem conta?
-            <a href="login.ejs"> Ir para Login </a>
+            <a href="login.html"> Ir para Login </a>
           </p>
         </form>
       </div>
