@@ -50,7 +50,17 @@ app.get('/consultas', (req, res) => {
   res.render('./consultas'); 
   
   });
+  app.get('/painel', (req, res) => {
+    res.render('painel');
+    }); 
 
+// READ
+app.get('/tables', (req, res) => {
+  db.query('SELECT * FROM consultas', (err, result) => {
+    if (err) throw err;
+    res.render('tables', { consultas: result });
+  });
+});
 
 // Rota para processar o formulário de login
 app.post('/login', (req, res) => {
@@ -64,21 +74,11 @@ if (err) throw err;
 if (results.length > 0) {
 req.session.loggedin = true;
 req.session.name = name;
-res.redirect('/dashboard');
+res.redirect('/painel');
 } else {
 res.send('Credenciais incorretas. <a href="/">Tente novamente</a>');
 }
 });
-});
-
-// Rota para a página do painel
-app.get('/dashboard', (req, res) => {
-
-if (req.session.loggedin) {
-res.send(`Bem-vindo, ${req.session.name}!<br><a href="/">Sair</a>`);
-} else {
-res.send('Faça login para acessar esta página. <a href="/">Login</a>');
-}
 });
 
 // Rota para fazer logout
@@ -95,8 +95,9 @@ app.use(express.static(__dirname + '/vendor'));
 app.use(express.static(__dirname + '/scss'));
 app.use(express.static(__dirname + '/js'));
 app.use(express.static(__dirname + '/css'));
-
-
+app.use(express.static(__dirname + '/demo'));
+app.use(express.static(__dirname + '/forms'));
+app.use(express.static(__dirname + '/images'));
 
 db.connect(err => {
   if (err) {
