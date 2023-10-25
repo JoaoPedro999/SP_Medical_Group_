@@ -156,11 +156,23 @@ app.get('/consultas', (req, res) => {
 res.render('consultas'); //renders vies/cadastro.ejs
 app.use(express.static(_dirname + '/'));
 });
-// Rota de cadastro
-app.post('/consultas', (req, res) => {
-  const { name,password } = req.body;
-  const query = 'INSERT INTO consultas (name, date, time, doctor) VALUES (?, ?, ?, ? )';
-  db.query(query, [name, password] , (err, result) => {
+
+//ROTA DE POST
+
+ // CREATE
+app.post('/add', (req, res) => {
+  const { nome,data, hora, doutor } = req.body;
+  const query = 'INSERT INTO consultas (nome, data, hora, doutor) VALUES (?, ?, ?, ? )';
+  db.query(query, [nome, data, hora, doutor] , (err, result) => {
+    if (err) throw err;
+  });
+}); 
+
+// Rota de consultas
+/* app.post('/add', (req, res) => {
+  const { nome,data, hora, doutor } = req.body;
+  const query = 'INSERT INTO consultas (nome, data, hora, doutor) VALUES (?, ?, ?, ? )';
+  db.query(query, [nome, data, hora, doutor] , (err, result) => {
     if (err) {
       console.error('Erro ao cadastrar a consulta:', err);
       res.status(500).send('Erro ao cadastrar a consulta.');
@@ -169,7 +181,7 @@ app.post('/consultas', (req, res) => {
       res.status(200).send('Consulta cadastrado com sucesso.');
     }
   });
-});
+}); */
 });
 app.listen(3001, () => {
 console.log('Servidor rodando na porta 3001');
