@@ -197,30 +197,11 @@ app.get('/consultas', (req, res) => {
   app.use(express.static(_dirname + '/'));
 });
 
-<<<<<<< HEAD
 // Rota de consultas
 app.post('/add', (req, res) => {
   const { nome, data, hora, doutor } = req.body;
   const query = 'INSERT INTO consultas (nome, data, hora, doutor) VALUES (?, ?, ?, ? )';
   db.query(query, [nome, data, hora, doutor], (err, result) => {
-=======
-//ROTA DE POST
-
- // CREATE
-app.post('/add', (req, res) => {
-  const { nome,data, hora, doutor } = req.body;
-  const query = 'INSERT INTO consultas (nome, data, hora, doutor) VALUES (?, ?, ?, ? )';
-  db.query(query, [nome, data, hora, doutor] , (err, result) => {
-    if (err) throw err;
-  });
-}); 
-
-// Rota de consultas
-/* app.post('/add', (req, res) => {
-  const { nome,data, hora, doutor } = req.body;
-  const query = 'INSERT INTO consultas (nome, data, hora, doutor) VALUES (?, ?, ?, ? )';
-  db.query(query, [nome, data, hora, doutor] , (err, result) => {
->>>>>>> 810ea6ae65d1193853c3fc9821541822fc2b86d4
     if (err) {
       console.error('Erro ao cadastrar a consulta:', err);
       res.status(500).send('Erro ao cadastrar a consulta.');
@@ -229,13 +210,8 @@ app.post('/add', (req, res) => {
       res.status(200).send('Consulta cadastrado com sucesso!');
     }
   });
-<<<<<<< HEAD
 });
 
-=======
-}); */
-});
->>>>>>> 810ea6ae65d1193853c3fc9821541822fc2b86d4
 app.listen(3001, () => {
   console.log('Servidor rodando na porta 3001');
 });
