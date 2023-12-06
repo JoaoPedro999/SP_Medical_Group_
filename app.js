@@ -90,7 +90,7 @@ app.post('/login', (req, res) => {
         req.session.loggedin = true;
         req.session.name = name;
 
-        switch (userType) {
+        switch (type) {
           case 'Administrador':
             res.redirect('/painel');
             break;
@@ -108,7 +108,6 @@ app.post('/login', (req, res) => {
     } else {
       res.send('Credenciais incorretas. <a href="/login">Tente novamente</a>');
     }
-
     console.log(req.session);
   });
 });
