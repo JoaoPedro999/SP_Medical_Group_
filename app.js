@@ -13,7 +13,8 @@ const db = mysql.createConnection({
   database: 'mydb',
 });
 
-app.get('/')
+//configurar EJS como o motor de visualização
+app.set('view engine', 'ejs');
 
 db.connect((err) => {
   if (err) {
@@ -72,14 +73,6 @@ app.get('/tables2', (req, res) => {
   });
 });
 
-app.get('/tables3', (req, res) => {
-  db.query('SELECT * FROM consultas WHERE ', (err, result) => {
-    if (err) throw err;
-    res.render('tables', { consultas: result },  {req: req});
-  });
-});
-
-// Rota para processar o formulário de login
 // Rota para processar o formulário de login
 app.post('/login', (req, res) => {
   const { name, password, type } = req.body;
@@ -92,29 +85,26 @@ app.post('/login', (req, res) => {
     if (results.length > 0) {
       const userType = results[0].type;
 
-      // Check if user type is valid (you might want to adjust this condition based on your needs)
-      if (userType) {
+      if (type) {
         req.session.loggedin = true;
         req.session.name = name;
 
-        switch (userType) {
+        switch (type) {
           case 'Administrador':
             res.redirect('/painel');
             break;
 
           case 'Leitor':
-            res.redirect('/painel2'); // Assuming you want to redirect for readers
+            res.redirect('/painel2'); 
             break;
-
-          default:
-            res.send('Credenciais incorretas. <a href="/">Tente novamente</a>');
         }
       } else {
-        res.send('Credenciais incorretas. <a href="/">Tente novamente</a>');
+        res.send('Credenciais incorretas. <a href="/login">Tente novamente</a>');
       }
     } else {
-      res.send('Credenciais incorretas. <a href="/">Tente novamente</a>');
+      res.send('Credenciais incorretas. <a href="/login">Tente novamente</a>');
     }
+    console.log(req.session);
   });
 });
 
@@ -144,8 +134,7 @@ db.connect(err => {
   }
   console.log('Conexão com o banco de dados estabelecida.');
 });
-//configurar EJS como o motor de visualização
-app.set('view engine', 'ejs');
+
 
 // Configurar o Body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
