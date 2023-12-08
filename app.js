@@ -38,9 +38,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Configurar EJS como o motor de visualização
 app.set('view engine', 'ejs');
 
-// Rota para a página de login
+// Rotas
 app.get('/', (req, res) => {
   res.render('index');
+});
+
+app.get('/usersucesso', (req, res) => {
+  res.render('usersucesso');
+});
+
+app.get('/consultasucesso', (req, res) => {
+  res.render('consultasucesso');
 });
 
 app.get('/login', (req, res) => {
@@ -58,7 +66,6 @@ app.get('/painel2', (req, res) => {
   res.render('painel2', {req: req});
 });
 
-// READ
 app.get('/tables', (req, res) => {
   db.query('SELECT * FROM consultas', (err, result) => {
     if (err) throw err;
@@ -72,11 +79,11 @@ app.get('/tables2', (req, res) => {
     res.render('tables2', { pacientes: result });
   });
 });
+
 // Rota para processar o formulário de login
 app.post('/login', (req, res) => {
   const { name, password, cpf, type } = req.body;
 
-  // Corrigindo a consulta SQL usando placeholders (?)
   const query = "SELECT * FROM pacientes WHERE name = ? AND password = ? AND cpf = ?";
 
   db.query(query, [name, password, cpf, type], (err, results) => {
@@ -131,14 +138,6 @@ app.use(express.static(__dirname + '/demo'));
 app.use(express.static(__dirname + '/forms'));
 app.use(express.static(__dirname + '/images'));
 
-db.connect(err => {
-  if (err) {
-    console.error('Erro na conexão com o banco de dados:', err);
-    return;
-  }
-  console.log('Conexão com o banco de dados estabelecida.');
-});
-
 
 // Configurar o Body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -165,10 +164,10 @@ app.post('/cadastro', (req, res) => {
   db.query(query, [name, password, cpf, type], (err, result) => {
     if (err) {
       console.error('Erro ao cadastrar o usuário:', err);
-      res.status(500).send('Erro ao cadastrar o usuário.');
+      res.status(500).send('Erro ao cadastrar o usuário.  <a href="/cadastro">Tente novamente</a>');
     } else {
       console.log('Usuário cadastrado com sucesso!');
-      res.status(200).send('Usuário cadastrado com sucesso.');
+      res.status(200).redirect('/usersucesso');
     }
   });
 });
@@ -186,10 +185,10 @@ app.post('/add', (req, res) => {
   db.query(query, [nome, data, hora, doutor], (err, result) => {
     if (err) {
       console.error('Erro ao cadastrar a consulta:', err);
-      res.status(500).send('Erro ao cadastrar a consulta.');
+      res.status(500).send('Erro ao cadastrar a consulta. <a href="/consultas">Tente novamente</a>');
     } else {
       console.log('Consulta cadastrado com sucesso!');
-      res.status(200).send('Consulta cadastrado com sucesso!');
+      res.status(200).redirect('/consultasucesso');
     }
   });
 });
