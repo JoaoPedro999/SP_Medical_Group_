@@ -13,7 +13,8 @@ const db = mysql.createConnection({
   database: 'mydb',
 });
 
-app.get('/')
+//configurar EJS como o motor de visualização
+app.set('view engine', 'ejs');
 
 db.connect((err) => {
   if (err) {
@@ -38,7 +39,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 // Rota para a página de login
-app.get('/', (req, res) => {
+app.get('/index', (req, res) => {
   res.render('index');
 });
 
@@ -54,45 +55,37 @@ app.get('/painel', (req, res) => {
   res.render('painel', {req: req});
 });
 app.get('/painel2', (req, res) => {
-  res.render('painel', {req: req});
+  res.render('painel2', {req: req});
 });
 
 // READ
 app.get('/tables', (req, res) => {
   db.query('SELECT * FROM consultas', (err, result) => {
     if (err) throw err;
-    res.render('tables', { consultas: result },  {req: req});
+    res.render('tables', { consultas: result });
   });
 });
 
 app.get('/tables2', (req, res) => {
   db.query('SELECT * FROM pacientes', (err, result) => {
     if (err) throw err;
-    res.render('tables2', { pacientes: result },  {req: req});
+    res.render('tables2', { pacientes: result });
   });
 });
-
-app.get('/tables3', (req, res) => {
-  db.query('SELECT * FROM consultas WHERE ', (err, result) => {
-    if (err) throw err;
-    res.render('tables', { consultas: result },  {req: req});
-  });
-});
-
-// Rota para processar o formulário de login
 // Rota para processar o formulário de login
 app.post('/login', (req, res) => {
-  const { name, password, type } = req.body;
+  const { name, password, cpf, type } = req.body;
 
-  const query = "SELECT * FROM pacientes WHERE name = ? AND password = ?";
+  // Corrigindo a consulta SQL usando placeholders (?)
+  const query = "SELECT * FROM pacientes WHERE name = ? AND password = ? AND cpf = ?";
 
-  db.query(query, [name, password, type], (err, results) => {
+  db.query(query, [name, password, cpf, type], (err, results) => {
     if (err) throw err;
 
     if (results.length > 0) {
       const userType = results[0].type;
 
-      // Check if user type is valid (you might want to adjust this condition based on your needs)
+      // Verificando se o tipo do usuário é válido
       if (userType) {
         req.session.loggedin = true;
         req.session.name = name;
@@ -103,18 +96,20 @@ app.post('/login', (req, res) => {
             break;
 
           case 'Leitor':
-            res.redirect('/painel2'); // Assuming you want to redirect for readers
+            res.redirect('/painel2');
             break;
 
           default:
-            res.send('Credenciais incorretas. <a href="/">Tente novamente</a>');
+            res.send('Tipo de usuário desconhecido. <a href="/login">Tente novamente</a>');
         }
       } else {
-        res.send('Credenciais incorretas. <a href="/">Tente novamente</a>');
+        res.send('Tipo de usuário não encontrado. <a href="/login">Tente novamente</a>');
       }
     } else {
-      res.send('Credenciais incorretas. <a href="/">Tente novamente</a>');
+      res.send('Credenciais incorretas. <a href="/login">Tente novamente</a>');
     }
+
+    console.log(req.session);
   });
 });
 
@@ -123,7 +118,7 @@ app.post('/login', (req, res) => {
 app.get('/logout', (req, res) => {
 
   req.session.destroy(() => {
-    res.redirect('/');
+    res.redirect('/index');
   });
 });
 
@@ -144,13 +139,12 @@ db.connect(err => {
   }
   console.log('Conexão com o banco de dados estabelecida.');
 });
-//configurar EJS como o motor de visualização
-app.set('view engine', 'ejs');
+
 
 // Configurar o Body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('views'));
-app.get('/', (req, res) => {
+app.get('/cadastro', (req, res) => {
   res.render('cadastro');
 });
 
@@ -172,28 +166,17 @@ app.post('/cadastro', (req, res) => {
   db.query(query, [name, password, cpf, type], (err, result) => {
     if (err) {
       console.error('Erro ao cadastrar o usuário:', err);
-      res.status(500).send('Erro ao cadastrar o usuário.');
+      res.status(500).send('Erro ao cadastrar o usuário. <a href="/cadastro">Tente novamente</a>');
     } else {
       console.log('Usuário cadastrado com sucesso!');
-      res.status(200).send('Usuário cadastrado com sucesso.');
+      res.status(200).send('Usuário cadastrado com sucesso. <a href="/login">Faça Login</a>');
     }
   });
-});
-// Configurar o Body Parser
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static('views'));
-app.get('/', (req, res) => {
-  res.render('consultas');
-});
-
-//rota para a pagina de cadastro
-app.get('/consultas', (req, res) => {
-  res.render('consultas');
 });
 
 app.set('view engine', 'ejs');
 app.get('/consultas', (req, res) => {
-  res.render('consultas'); //renders vies/cadastro.ejs
+  res.render('consultas'); 
   app.use(express.static(_dirname + '/'));
 });
 
@@ -204,10 +187,10 @@ app.post('/add', (req, res) => {
   db.query(query, [nome, data, hora, doutor], (err, result) => {
     if (err) {
       console.error('Erro ao cadastrar a consulta:', err);
-      res.status(500).send('Erro ao cadastrar a consulta.');
+      res.status(500).send('Erro ao cadastrar a consulta. <a href="/consultas">Tente novamente</a>');
     } else {
       console.log('Consulta cadastrado com sucesso!');
-      res.status(200).send('Consulta cadastrado com sucesso!');
+      res.status(200).send('Consulta cadastrado com sucesso! <a href="/painel2">Voltar</a>');
     }
   });
 });

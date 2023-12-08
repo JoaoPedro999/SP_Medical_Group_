@@ -255,21 +255,23 @@ input[type="submit"]:hover{
 
   <div class="container">
     <div class="content">
-      <!-- FORMULÁRIO DE CADASTRO -->
-      <div id="cadastro">
+      <!-- FORMULÁRIO DE  LOGIN -->
+      <div id="login">
         <form method="post" action="/login">
           <h2>Login</h2>
 
           <p>
-            <label for="nome_cad">Seu nome</label>
-            <input id="nome_cad" name="name" required="required" type="text" placeholder="nome" />
+            <label for="name">Seu nome</label>
+            <input id="name" name="name" required="required" type="text" placeholder="nome" />
           </p>
 
           <p>
-            <label for="email_cad">Sua senha</label>
-            <input id="email_cad" name="password" required="required" type="password" placeholder="senha" />
+            <label for="password">Sua senha</label>
+            <input id="password" name="password" required="required" type="password" placeholder="senha" />
           </p>
-          
+          <label for="cpf">Seu CPF</label>
+          <input id="password" name="cpf" required="required" type="text" placeholder="cpf" />
+        </p>
             <input type="submit" value="Login" />
           </p>
 
