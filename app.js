@@ -38,9 +38,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Configurar EJS como o motor de visualização
 app.set('view engine', 'ejs');
 
+<<<<<<< HEAD
 // Rota para a página de login
 app.get('/index', (req, res) => {
+=======
+// Rotas
+app.get('/', (req, res) => {
+>>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
   res.render('index');
+});
+
+app.get('/usersucesso', (req, res) => {
+  res.render('usersucesso');
+});
+
+app.get('/consultasucesso', (req, res) => {
+  res.render('consultasucesso');
 });
 
 app.get('/login', (req, res) => {
@@ -58,7 +71,6 @@ app.get('/painel2', (req, res) => {
   res.render('painel2', {req: req});
 });
 
-// READ
 app.get('/tables', (req, res) => {
   db.query('SELECT * FROM consultas', (err, result) => {
     if (err) throw err;
@@ -72,11 +84,18 @@ app.get('/tables2', (req, res) => {
     res.render('tables2', { pacientes: result });
   });
 });
+<<<<<<< HEAD
+=======
+
+>>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
 // Rota para processar o formulário de login
 app.post('/login', (req, res) => {
   const { name, password, cpf, type } = req.body;
 
+<<<<<<< HEAD
   // Corrigindo a consulta SQL usando placeholders (?)
+=======
+>>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
   const query = "SELECT * FROM pacientes WHERE name = ? AND password = ? AND cpf = ?";
 
   db.query(query, [name, password, cpf, type], (err, results) => {
@@ -90,7 +109,7 @@ app.post('/login', (req, res) => {
         req.session.loggedin = true;
         req.session.name = name;
 
-        switch (userType) {
+        switch (type) {
           case 'Administrador':
             res.redirect('/painel');
             break;
@@ -108,7 +127,10 @@ app.post('/login', (req, res) => {
     } else {
       res.send('Credenciais incorretas. <a href="/login">Tente novamente</a>');
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
     console.log(req.session);
   });
 });
@@ -132,6 +154,7 @@ app.use(express.static(__dirname + '/demo'));
 app.use(express.static(__dirname + '/forms'));
 app.use(express.static(__dirname + '/images'));
 
+<<<<<<< HEAD
 db.connect(err => {
   if (err) {
     console.error('Erro na conexão com o banco de dados:', err);
@@ -140,6 +163,8 @@ db.connect(err => {
   console.log('Conexão com o banco de dados estabelecida.');
 });
 
+=======
+>>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
 
 // Configurar o Body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -166,10 +191,17 @@ app.post('/cadastro', (req, res) => {
   db.query(query, [name, password, cpf, type], (err, result) => {
     if (err) {
       console.error('Erro ao cadastrar o usuário:', err);
+<<<<<<< HEAD
       res.status(500).send('Erro ao cadastrar o usuário. <a href="/cadastro">Tente novamente</a>');
     } else {
       console.log('Usuário cadastrado com sucesso!');
       res.status(200).send('Usuário cadastrado com sucesso. <a href="/login">Faça Login</a>');
+=======
+      res.status(500).send('Erro ao cadastrar o usuário.  <a href="/cadastro">Tente novamente</a>');
+    } else {
+      console.log('Usuário cadastrado com sucesso!');
+      res.status(200).redirect('/usersucesso');
+>>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
     }
   });
 });
@@ -190,7 +222,11 @@ app.post('/add', (req, res) => {
       res.status(500).send('Erro ao cadastrar a consulta. <a href="/consultas">Tente novamente</a>');
     } else {
       console.log('Consulta cadastrado com sucesso!');
+<<<<<<< HEAD
       res.status(200).send('Consulta cadastrado com sucesso! <a href="/painel2">Voltar</a>');
+=======
+      res.status(200).redirect('/consultasucesso');
+>>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
     }
   });
 });
