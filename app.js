@@ -4,17 +4,19 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const app = express();
 
+// Defina USER_TYPES antes de ser referenciado
+const USER_TYPES = {
+  ADMIN: 'Administrador',
+  READER: 'Leitor',
+};
 
 // Configurar a conexão com o banco de dados MySQL
 const db = mysql.createConnection({
   host: 'localhost',
-  user: 'phpmyadmin',
-  password: 'aluno',
+  user: 'root',
+  password: '',
   database: 'mydb',
 });
-
-//configurar EJS como o motor de visualização
-app.set('view engine', 'ejs');
 
 db.connect((err) => {
   if (err) {
@@ -38,18 +40,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Configurar EJS como o motor de visualização
 app.set('view engine', 'ejs');
 
-<<<<<<< HEAD
-// Rota para a página de login
-app.get('/index', (req, res) => {
-=======
-// Rotas
+// ROTAS
 app.get('/', (req, res) => {
->>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
   res.render('index');
 });
 
 app.get('/usersucesso', (req, res) => {
   res.render('usersucesso');
+});
+
+app.get('/acessorestrito', (req, res) => {
+  res.render('acessorestrito');
 });
 
 app.get('/consultasucesso', (req, res) => {
@@ -58,17 +59,40 @@ app.get('/consultasucesso', (req, res) => {
 
 app.get('/login', (req, res) => {
   res.render('login');
-
 });
+
 app.get('/consultas', (req, res) => {
-  res.render('./consultas');
+  res.render('consultas');
+});
 
+app.get('/cadastro', (req, res) => {
+  res.render('cadastro');
 });
-app.get('/painel', (req, res) => {
-  res.render('painel', {req: req});
+
+// Middleware para verificar a sessão e o tipo de usuário
+const checkUserTypeMiddleware = (allowedUserTypes) => {
+  return (req, res, next) => {
+    if (req.session.loggedin) {
+      const userType = req.session.type;
+
+      if (allowedUserTypes.includes(userType)) {
+        // Usuário tem um tipo válido, permitir o acesso à rota
+        return next();
+      }
+    }
+
+    // Usuário não tem uma sessão válida ou o tipo de usuário é inválido
+    res.redirect('acessorestrito');
+  };
+};
+
+// Rotas protegidas pelo tipo de usuário
+app.get('/painel', checkUserTypeMiddleware([USER_TYPES.ADMIN]), (req, res) => {
+  res.render('painel', { req: req });
 });
-app.get('/painel2', (req, res) => {
-  res.render('painel2', {req: req});
+
+app.get('/painel2', checkUserTypeMiddleware([USER_TYPES.READER]), (req, res) => {
+  res.render('painel2', { req: req });
 });
 
 app.get('/tables', (req, res) => {
@@ -84,63 +108,45 @@ app.get('/tables2', (req, res) => {
     res.render('tables2', { pacientes: result });
   });
 });
-<<<<<<< HEAD
-=======
 
->>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
-// Rota para processar o formulário de login
 app.post('/login', (req, res) => {
   const { name, password, cpf, type } = req.body;
-
-<<<<<<< HEAD
-  // Corrigindo a consulta SQL usando placeholders (?)
-=======
->>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
-  const query = "SELECT * FROM pacientes WHERE name = ? AND password = ? AND cpf = ?";
+  const query = 'SELECT * FROM pacientes WHERE name = ? AND password = ? AND cpf = ?';
 
   db.query(query, [name, password, cpf, type], (err, results) => {
-    if (err) throw err;
+    if (err) {
+      console.error('Erro na consulta SQL:', err);
+      return res.status(500).send('Erro interno. <a href="/login">Tente novamente</a>');
+    }
 
     if (results.length > 0) {
       const userType = results[0].type;
 
-      // Verificando se o tipo do usuário é válido
       if (userType) {
         req.session.loggedin = true;
         req.session.name = name;
+        req.session.type = userType;
 
-        switch (type) {
-          case 'Administrador':
-            res.redirect('/painel');
-            break;
-
-          case 'Leitor':
-            res.redirect('/painel2');
-            break;
-
+        switch (userType) {
+          case USER_TYPES.ADMIN:
+            return res.redirect('/painel');
+          case USER_TYPES.READER:
+            return res.redirect('/painel2');
           default:
-            res.send('Tipo de usuário desconhecido. <a href="/login">Tente novamente</a>');
+            return res.status(400).send('Tipo de usuário desconhecido. <a href="/login">Tente novamente</a>');
         }
       } else {
-        res.send('Tipo de usuário não encontrado. <a href="/login">Tente novamente</a>');
+        return res.status(400).send('Tipo de usuário não encontrado. <a href="/login">Tente novamente</a>');
       }
     } else {
-      res.send('Credenciais incorretas. <a href="/login">Tente novamente</a>');
+      return res.status(400).send('Credenciais incorretas. <a href="/login">Tente novamente</a>');
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
-    console.log(req.session);
   });
 });
 
-
-// Rota para fazer logout
 app.get('/logout', (req, res) => {
-
   req.session.destroy(() => {
-    res.redirect('/index');
+    res.redirect('/');
   });
 });
 
@@ -153,85 +159,43 @@ app.use(express.static(__dirname + '/css'));
 app.use(express.static(__dirname + '/demo'));
 app.use(express.static(__dirname + '/forms'));
 app.use(express.static(__dirname + '/images'));
+app.use(express.static(__dirname + '/views'));
 
-<<<<<<< HEAD
-db.connect(err => {
-  if (err) {
-    console.error('Erro na conexão com o banco de dados:', err);
-    return;
-  }
-  console.log('Conexão com o banco de dados estabelecida.');
-});
-
-=======
->>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
-
-// Configurar o Body Parser
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static('views'));
-app.get('/cadastro', (req, res) => {
-  res.render('cadastro');
-});
-
-//rota para a pagina de cadastro
-app.get('/cadastro', (req, res) => {
-  res.render('cadastro');
-});
-
-app.set('view engine', 'ejs');
-app.get('/login', (req, res) => {
-  res.render('login'); 
-  app.use(express.static(_dirname + '/'));
-});
-
-// Rota de cadastro
 app.post('/cadastro', (req, res) => {
   const { name, password, cpf, type } = req.body;
   const query = 'INSERT INTO pacientes (name, password, cpf, type) VALUES (?, ?, ?, "Leitor" )';
+
   db.query(query, [name, password, cpf, type], (err, result) => {
     if (err) {
       console.error('Erro ao cadastrar o usuário:', err);
-<<<<<<< HEAD
       res.status(500).send('Erro ao cadastrar o usuário. <a href="/cadastro">Tente novamente</a>');
     } else {
       console.log('Usuário cadastrado com sucesso!');
-      res.status(200).send('Usuário cadastrado com sucesso. <a href="/login">Faça Login</a>');
-=======
-      res.status(500).send('Erro ao cadastrar o usuário.  <a href="/cadastro">Tente novamente</a>');
-    } else {
-      console.log('Usuário cadastrado com sucesso!');
-      res.status(200).redirect('/usersucesso');
->>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
+      res.redirect('/usersucesso');
     }
   });
 });
 
-app.set('view engine', 'ejs');
 app.get('/consultas', (req, res) => {
-  res.render('consultas'); 
-  app.use(express.static(_dirname + '/'));
+  res.render('consultas');
 });
 
-// Rota de consultas
 app.post('/add', (req, res) => {
   const { nome, data, hora, doutor } = req.body;
   const query = 'INSERT INTO consultas (nome, data, hora, doutor) VALUES (?, ?, ?, ? )';
+
   db.query(query, [nome, data, hora, doutor], (err, result) => {
     if (err) {
       console.error('Erro ao cadastrar a consulta:', err);
       res.status(500).send('Erro ao cadastrar a consulta. <a href="/consultas">Tente novamente</a>');
     } else {
-      console.log('Consulta cadastrado com sucesso!');
-<<<<<<< HEAD
-      res.status(200).send('Consulta cadastrado com sucesso! <a href="/painel2">Voltar</a>');
-=======
-      res.status(200).redirect('/consultasucesso');
->>>>>>> d173cc8892573022fa0f1c997f623ab277310a27
+      console.log('Consulta cadastrada com sucesso!');
+      res.redirect('/consultasucesso');
     }
   });
 });
 
-app.listen(3001, () => {
-  console.log('Servidor rodando na porta 3001');
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
-

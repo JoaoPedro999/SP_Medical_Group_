@@ -1,25 +1,49 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<style>
-a:link, a:visited {
-  background-color:#4ab3c6;
-  color: white;
-  padding: 14px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usuário Cadastrado com Sucesso!</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column; 
+    }
 
-a:hover, a:active {
-  background-color: #5eddf3;
-}
-</style>
+    h2 {
+      color: #333;
+    }
+
+    a {
+      background-color: #4ab3c6;
+      color: white;
+      padding: 14px 25px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 5px;
+      transition: background-color 0.3s ease-in-out;
+      margin-top: 20px; 
+      display: block; 
+    }
+
+    a:hover, a:active {
+      background-color: #5eddf3;
+    }
+  </style>
 </head>
 <body>
 
-<h2>Usuário Cadastrado com Sucesso!</h2>
-
-<a href="/login" target="_blank">Ir para login</a>
+  <h2>Usuário Cadastrado com Sucesso!</h2>
+  
+  <a href="/login">Ir para login</a>
 
 </body>
 </html>

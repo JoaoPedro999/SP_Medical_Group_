@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Consulta Agendada com Sucesso!</title>
+  <title>Usuário Cadastrado com Sucesso!</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -14,11 +14,17 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      flex-direction: column;
+      flex-direction: column; 
     }
 
     h2 {
       color: #333;
+    }
+
+    img {
+      width: 50%; /* Defina o tamanho desejado, por exemplo, 50% do contêiner pai */
+      max-width: 300px; /* Adicionado para limitar o tamanho máximo */
+      margin-bottom: 20px; /* Adicionado espaço abaixo da imagem */
     }
 
     a {
@@ -31,7 +37,7 @@
       border-radius: 5px;
       transition: background-color 0.3s ease-in-out;
       margin-top: 20px; 
-      display: block;
+      display: block; 
     }
 
     a:hover, a:active {
@@ -41,9 +47,10 @@
 </head>
 <body>
 
-  <h2>Consulta Agendada com Sucesso!</h2>
-  
-  <a href="/painel2">Voltar</a>
+  <h2>ACESSO RESTRITO!</h2>
+  <img src="assets/img/warn.png" alt="Aviso">
+
+  <a href="/login">Ir para login</a>
 
 </body>
 </html>
