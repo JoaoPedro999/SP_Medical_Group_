@@ -1,6 +1,6 @@
 <h1>SP Medical Group</h1>
 
-Desenvolvedores: João Pedro, Davi Nogueira, Kamile Silva, Caroline Aparecida
+Desenvolvedores: João Pedro, Davi Nogueira, Kamile Silva, Caroline Aparecida, Nicolas Schiavinato
 
 ================REQUISITOS================
 
