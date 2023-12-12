@@ -13,17 +13,6 @@
     </head>
     <style>
       @charset "UTF-8";
-/*!
-* Start Bootstrap - SB Admin v7.0.7 (https://startbootstrap.com/template/sb-admin)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
-*/
-/*!
- * Bootstrap  v5.2.3 (https://getbootstrap.com/)
- * Copyright 2011-2022 The Bootstrap Authors
- * Copyright 2011-2022 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- */
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -11277,7 +11266,7 @@ body {
                         <li><a class="dropdown-item" href="#!">Configurações</a></li>
                         <li><a class="dropdown-item" href="#!">Log de Atividades</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="/index">Logout</a></li>
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -11290,7 +11279,7 @@ body {
                             <div class="sb-sidenav-menu-heading"></div>
                             <a class="nav-link" href="/painel">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Perfil
+                                Dashboard
                             </a>
                             <div class="sb-sidenav-menu-heading">Outros</div>
                             <a class="nav-link" href="/tables">
@@ -11372,26 +11361,6 @@ body {
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
-        <script>
-          window.addEventListener('DOMContentLoaded', event => {
-          
-          // Toggle the side navigation
-          const sidebarToggle = document.body.querySelector('#sidebarToggle');
-          if (sidebarToggle) {
-              // Uncomment Below to persist sidebar toggle between refreshes
-              // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-              //     document.body.classList.toggle('sb-sidenav-toggled');
-              // }
-              sidebarToggle.addEventListener('click', event => {
-                  event.preventDefault();
-                  document.body.classList.toggle('sb-sidenav-toggled');
-                  localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-              });
-          }
-          
-          });
-          
-                  </script>
     </body>
 </html>
 

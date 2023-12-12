@@ -457,15 +457,6 @@ legend + * {
   outline-offset: -2px;
   -webkit-appearance: textfield;
 }
-
-/* rtl:raw:
-[type="tel"],
-[type="url"],
-[type="email"],
-[type="number"] {
-  direction: ltr;
-}
-*/
 ::-webkit-search-decoration {
   -webkit-appearance: none;
 }
@@ -11277,7 +11268,7 @@ body {
                         <li><a class="dropdown-item" href="#!">Configurações</a></li>
                         <li><a class="dropdown-item" href="#!">Log de Atividades</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="/index">Logout</a></li>
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -11290,7 +11281,7 @@ body {
                             <div class="sb-sidenav-menu-heading"></div>
                             <a class="nav-link" href="/painel">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Perfil
+                                Dashboard
                             </a>
                             <div class="sb-sidenav-menu-heading">Outros</div>
                             <a class="nav-link" href="/tables">
@@ -11373,26 +11364,6 @@ body {
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
-        <script>
-          window.addEventListener('DOMContentLoaded', event => {
-          
-          // Toggle the side navigation
-          const sidebarToggle = document.body.querySelector('#sidebarToggle');
-          if (sidebarToggle) {
-              // Uncomment Below to persist sidebar toggle between refreshes
-              // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-              //     document.body.classList.toggle('sb-sidenav-toggled');
-              // }
-              sidebarToggle.addEventListener('click', event => {
-                  event.preventDefault();
-                  document.body.classList.toggle('sb-sidenav-toggled');
-                  localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-              });
-          }
-          
-          });
-          
-                  </script>
     </body>
 </html>
 

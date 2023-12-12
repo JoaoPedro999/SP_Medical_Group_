@@ -109,6 +109,22 @@ app.get('/tables2', (req, res) => {
   });
 });
 
+app.get('/tables3', (req, res) => {
+  const userId = req.session.name || null;
+
+  db.query('SELECT * FROM consultas WHERE nome = ?', [userId], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Erro interno do servidor');
+      return;
+    }
+
+    // Renderizar a página e passar 'name' para o EJS
+    res.render('tables3', { consultas: result, name: req.session.name, req: req });
+  });
+});
+
+
 app.post('/login', (req, res) => {
   const { name, password, cpf, type } = req.body;
   const query = 'SELECT * FROM pacientes WHERE name = ? AND password = ? AND cpf = ?';
