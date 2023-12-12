@@ -7,6 +7,7 @@ const app = express();
 // Defina USER_TYPES antes de ser referenciado
 const USER_TYPES = {
   ADMIN: 'Administrador',
+  DOCTOR: 'Doutor',
   READER: 'Leitor',
 };
 
@@ -95,6 +96,10 @@ app.get('/painel2', checkUserTypeMiddleware([USER_TYPES.READER]), (req, res) => 
   res.render('painel2', { req: req });
 });
 
+app.get('/painel3', checkUserTypeMiddleware([USER_TYPES.DOCTOR]), (req, res) => {
+  res.render('painel3', { req: req });
+});
+
 app.get('/tables', (req, res) => {
   db.query('SELECT * FROM consultas', (err, result) => {
     if (err) throw err;
@@ -124,6 +129,21 @@ app.get('/tables3', (req, res) => {
   });
 });
 
+app.get('/tables4', (req, res) => {
+  const userId = req.session.name || null;
+
+  db.query('SELECT * FROM consultas WHERE doutor = ?', [userId], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Erro interno do servidor');
+      return;
+    }
+
+    // Renderizar a página e passar 'name' para o EJS
+    res.render('tables4', { consultas: result, name: req.session.name, req: req });
+  });
+});
+
 
 app.post('/login', (req, res) => {
   const { name, password, cpf, type } = req.body;
@@ -148,6 +168,8 @@ app.post('/login', (req, res) => {
             return res.redirect('/painel');
           case USER_TYPES.READER:
             return res.redirect('/painel2');
+          case USER_TYPES.DOCTOR:
+              return res.redirect('/painel3');
           default:
             return res.status(400).send('Tipo de usuário desconhecido. <a href="/login">Tente novamente</a>');
         }
