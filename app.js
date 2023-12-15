@@ -14,8 +14,8 @@ const USER_TYPES = {
 // Configurar a conexão com o banco de dados MySQL
 const db = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
-  password: '',
+  user: 'phpmyadmin',
+  password: 'aluno',
   database: 'mydb',
 });
 

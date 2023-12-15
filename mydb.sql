@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1deb5ubuntu1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Tempo de geração: 08/12/2023 às 13:48
--- Versão do servidor: 10.6.12-MariaDB-0ubuntu0.22.04.1
--- Versão do PHP: 8.1.2-1ubuntu2.14
+-- Host: 127.0.0.1:3306
+-- Tempo de geração: 12-Dez-2023 às 22:03
+-- Versão do servidor: 8.0.21
+-- versão do PHP: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,18 +24,19 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `consultas`
+-- Estrutura da tabela `consultas`
 --
 
-CREATE TABLE `consultas` (
-  `nome` varchar(255) NOT NULL,
-  `data` varchar(255) NOT NULL,
-  `hora` varchar(255) NOT NULL,
-  `doutor` varchar(255) NOT NULL
+DROP TABLE IF EXISTS `consultas`;
+CREATE TABLE IF NOT EXISTS `consultas` (
+  `nome` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `data` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `hora` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `doutor` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `consultas`
+-- Extraindo dados da tabela `consultas`
 --
 
 INSERT INTO `consultas` (`nome`, `data`, `hora`, `doutor`) VALUES
@@ -51,60 +52,33 @@ INSERT INTO `consultas` (`nome`, `data`, `hora`, `doutor`) VALUES
 ('davi', '2023-08-15', '15:00', 'Fernanda Oliveira'),
 ('davi', '2023-08-15', '15:00', 'Wilian Afton'),
 ('davi', '5665-04-05', '07:59', 'Walter White'),
-('a', '2023-12-09', '12:17', 'Fernanda Oliveira');
+('a', '2023-12-09', '12:17', 'Fernanda Oliveira'),
+('Paciente01', '2023-12-13', '17:16', 'Walter White'),
+('Paciente01', '2023-12-12', '17:26', 'Fernanda Oliveira'),
+('Paciente01', '2023-12-12', '19:47', 'Walter White');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `pacientes`
+-- Estrutura da tabela `pacientes`
 --
 
-CREATE TABLE `pacientes` (
-  `name` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `cpf` varchar(255) DEFAULT NULL,
-  `type` varchar(255) NOT NULL
+DROP TABLE IF EXISTS `pacientes`;
+CREATE TABLE IF NOT EXISTS `pacientes` (
+  `name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cpf` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `pacientes`
+-- Extraindo dados da tabela `pacientes`
 --
 
 INSERT INTO `pacientes` (`name`, `password`, `cpf`, `type`) VALUES
-('joao', '123', '42588517870', ''),
-('João', '123', NULL, ''),
-('Joao', '123', NULL, ''),
-('Joao', '123', NULL, ''),
-('shavinato', 'shavinato10', NULL, ''),
-('João ', '23031983', NULL, ''),
-('João Pedro', '23031983', '42588517870', ''),
-('admin', 'admin', NULL, ''),
-('admin', 'admin', NULL, ''),
-('Admin', '23031983', '42588517870', 'Administrador'),
-('Admin', '23031983', '42588517870', 'Administrador'),
-('Joao', '23031983', '42588517870', 'Leitor'),
-('Joao', '23031983', '42588517870', 'Leitor'),
-('Joao', '123', '42588517870', 'Leitor'),
-('João Pedro Teixeira', '2303', '42588517870', 'Leitor'),
-('Gustavo', '123', '12345678910', 'Leitor'),
-('João', '123', '42588517870', 'Leitor'),
-('Davi', '123', '123', 'Leitor'),
-('Davi', '123', '123', 'Leitor'),
-('Davi', '123', '123', 'Leitor'),
-('kamile', '123', '123', 'Leitor'),
-('Administrador', 'admin', '000', 'Administrador'),
-('Administrador', 'admin', '000', 'Administrador'),
-('Guilherme Veiga', '123', '123', 'Leitor'),
+('admin', 'admin', 'admin', 'Administrador'),
 ('Paciente01', '123', '123', 'Leitor'),
-('Veiga', 'veiga', '123', 'Leitor'),
-('Davi', '123', '123', 'Leitor'),
-('camyle', '170', '170', 'Leitor'),
-('Brito', 'vasco123', '222222222222222', 'Leitor'),
-('Teste', '123', '2', 'Leitor'),
-('Teste', '123', '2', 'Leitor'),
-('Teste', '123', '2', 'Leitor'),
-('a', 'a', 'a', 'Leitor'),
-('a', 'a', 'a', 'Leitor');
+('Walter White', '123', '123', 'Doutor');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
