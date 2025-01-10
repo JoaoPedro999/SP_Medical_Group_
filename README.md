@@ -51,7 +51,7 @@ cd SP-Medical-Group
 pip install -r requirements.txt
 # Configurar o banco de dados com os scripts fornecidos
 python app.py
-# Acesse no navegador: http://localhost:5000</code></pre>
+# Acesse no navegador: http://localhost:3001</code></pre>
     </div>
   </section>
 
