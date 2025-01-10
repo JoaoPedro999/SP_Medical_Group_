@@ -13,66 +13,6 @@
       margin: 0;
       padding: 0;
     }
-
-    h1, h2, h3 {
-      color: #2c3e50;
-    }
-
-    h1 {
-      background-color: #16a085;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      margin: 0;
-    }
-
-    section {
-      margin: 20px;
-      padding: 20px;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    section ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    section ul li {
-      margin: 10px 0;
-    }
-
-    .code-block {
-      background-color: #f9f9f9;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-      font-family: 'Courier New', Courier, monospace;
-      overflow-x: auto;
-    }
-
-    .badge {
-      background-color: #16a085;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 20px;
-      text-decoration: none;
-    }
-
-    .badge:hover {
-      background-color: #1abc9c;
-    }
-
-    footer {
-      background-color: #16a085;
-      color: white;
-      text-align: center;
-      padding: 10px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
   </style>
 </head>
 <body>
